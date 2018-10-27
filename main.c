@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int operacoes=0; //numero de operacoes realizadas
 
 int main(int argc, char const *argv[]){
 	int n;
