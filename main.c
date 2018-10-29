@@ -23,13 +23,13 @@ int main(int argc, char const *argv[]){
 
 	printf("Insira os valores de dA:\n");
 	fflush(stdout);
-	for(int i=0;i<n;i++){
+	for(int i=0;i<n-2;i++){
 		scanf("%lf",&(dA[i]));
 	}
 
 	printf("Insira os valores de dB:\n");
 	fflush(stdout);
-	for(int i=0;i<n;i++){
+	for(int i=0;i<n-1;i++){
 		scanf("%lf",&(dB[i]));
 	}
 
@@ -41,13 +41,13 @@ int main(int argc, char const *argv[]){
 
 	printf("Insira os valores de dC:\n");
 	fflush(stdout);
-	for(int i=0;i<n;i++){
+	for(int i=0;i<n-1;i++){
 		scanf("%lf",&(dC[i]));
 	}
 
 	printf("Insira os valores de dD:\n");
 	fflush(stdout);
-	for(int i=0;i<n;i++){
+	for(int i=0;i<n-2;i++){
 		scanf("%lf",&(dD[i]));
 	}
 

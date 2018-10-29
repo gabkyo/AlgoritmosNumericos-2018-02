@@ -10,7 +10,19 @@ void eliminacao(double *dA,double *dB,double *Dp,double *dC,double *dD, int n){
 		for (int i = 0; i < n; ++i) {
 			matriz[i]=(double*)malloc(sizeof(double)*n);
 			for (int j = 0; j < n; ++j) {
+				if(i-j==2){
+					matriz[i][j]=dA[i];
+				}else if (i-j==1) {
+					matriz[i][j]=dB[j];
+				}else if (i-j==1) {
+					matriz[i][j]=dB[j];
+				}else if (i-j==1) {
+					matriz[i][j]=dB[j];
+				}else if (i-j==1) {
+					matriz[i][j]=dB[j];
+				}else{
 
+				}
 			}
 		}
 }
