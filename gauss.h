@@ -18,7 +18,7 @@ void pivotear(double **matriz, int i,int n){
 		}
 	}
 	printf("ok\n");
-		fflush(stdout);
+	fflush(stdout);
 
 }
 
@@ -35,13 +35,19 @@ void eliminacao(double dA,double dB,double Dp,double dC,double dD, int n){
 			}else if (i==j) {
 				matriz[i][j]=Dp;
 			}else if (i-j==-2) {
-				matriz[i][j]=dC;
-			}else if (i-j==-1) {
 				matriz[i][j]=dD;
+			}else if (i-j==-1) {
+				matriz[i][j]=dC;
 			}else{
 				matriz[i][j]=0;
 			}
 		}
+	}
+	for (int i = 0; i < n; ++i) { //printar
+		for (int j = 0; j < n; ++j) {
+			printf("%.2lf ",matriz[i][j]);
+		}
+		printf("\n");
 	}
 	printf("ok\n");
 	fflush(stdout);

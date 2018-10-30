@@ -4,7 +4,7 @@
 
 int operacoes = 0; //numero de operacoes realizadas
 
-//
+//i linha j coluna
 
 void pegaValores(int *n, double *dA, double *dB, double *dC, double *dD, double *Dp){
     *n = 0;
@@ -102,7 +102,7 @@ int main(int argc, char const *argv[])
 
     pegaValores(n, dA, dB, dC, dD, Dp);
 
-    printf("\n\nn= %d. \ndA= %lf. \ndB= %lf. \ndC= %lf. \ndD= %lf. \nDp= %lf.", *n, *dA, *dB, *dC, *dD, *Dp);
+    printf("\n\nn= %d. \ndA= %lf. \ndB= %lf. \ndC= %lf. \ndD= %lf. \nDp= %lf.\n", *n, *dA, *dB, *dC, *dD, *Dp);
     fflush(stdout);
     eliminacao(*dA, *dB, *Dp, *dC, *dD, *n);
     free(n);
