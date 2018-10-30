@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "organizacao.h"
 #include "gauss.h"
+#include "seidel.h"
 
 int operacoes = 0; //numero de operacoes realizadas
 
@@ -28,7 +29,7 @@ int main(int argc, char const *argv[]){
     eliminacao(n, matriz, b, x, &ce);
     
     //FAZER MAIS DE UMA VEZ...
-    gaussSeidel(n, matriz, b, x, &cs);
+    inicio(matriz,b,n);
     
     liberarTudo(n, &matriz, &b, &x);
     
