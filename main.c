@@ -22,7 +22,7 @@ int main(int argc, char const *argv[]){
     fflush(stdout);
     
     //TRIANGULARIZACAO
-    triangularizacao(n, matriz, b);
+    triangularizacao(n, matriz, b, &ce, &cs);
     
     
     eliminacao(n, matriz, b, x, &ce);
@@ -31,6 +31,9 @@ int main(int argc, char const *argv[]){
     gaussSeidel(n, matriz, b, x, &cs);
     
     liberarTudo(n, &matriz, &b, &x);
+    
+    printf("\n\n%d\n", ce);
+    fflush(stdout);
     
     return 0;
 }
