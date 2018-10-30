@@ -6,10 +6,6 @@
 
 int operacoes = 0; //numero de operacoes realizadas
 
-//i linha j colunaaaa
-
-
-
 int main(int argc, char const *argv[]){
     int n, ce, cs;
     double dA, dB, dC, dD, Dp, **matriz, *b, *x;
