@@ -22,6 +22,7 @@ void pivotear(double **matriz, int i){
 
 void eliminacao(double dA,double dB,double Dp,double dC,double dD, int n){
 	double **matriz=(double**)malloc(sizeof(double*) *n);
+	double *b=(double*)malloc(sizeof(double) * n);
 	for (int i = 0; i < n; ++i) {
 		matriz[i]=(double*)malloc(sizeof(double)*n);
 		for (int j = 0; j < n; ++j) {
@@ -49,6 +50,12 @@ void eliminacao(double dA,double dB,double Dp,double dC,double dD, int n){
 				//operacao+2
 			}
 		}
+	}
+	for (int i = n-1; i >=0; --i) {
+		for (int j = i; j < i+5; ++j) {
+
+		}
+
 	}
 }
 
