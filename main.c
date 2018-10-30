@@ -6,7 +6,7 @@
 
 int operacoes = 0; //numero de operacoes realizadas
 
-//i linha j coluna
+//i linha j colunaaaa
 
 
 
