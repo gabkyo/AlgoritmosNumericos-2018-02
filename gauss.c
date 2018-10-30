@@ -60,6 +60,4 @@ void eliminacao(int n, double **matriz, double *b, double *x, int *ce){
 
 void gaussSeidel(int n, double **matriz, double *b, double *x, int *cs){
     cs = 0;
-    
-    
 }
