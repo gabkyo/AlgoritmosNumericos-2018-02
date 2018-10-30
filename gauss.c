@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "gauss.h"
+#include "organizacao.h"
 
 
 void pivotear(double **matriz, int j,int n){
@@ -19,67 +20,46 @@ void pivotear(double **matriz, int j,int n){
 			//operacao+1
 		}
 	}
-	printf("ok\n");
-	fflush(stdout);
-
 }
 
+void triangularizacao(int n, double **matriz, double *b){
+    for (int i = 0; i < n; ++i) { 
+        pivotear(matriz, i,n);          
+        printf("%d\n",i);
+        fflush(stdout);
+        for (int j = i+1; j<=i+2 && j<n; j++) { //colunas
+            double m = (matriz[j][i]/matriz[i][i]);
+                for (int k = i; k<n; k++) { //linhas
+                        matriz[j][k] -= (matriz[i][k])*m; //OPERACAO EM A
+                        b[j] -= b[i]*m;                   //OPERACAO EM B
+                }  
+        }
+    }
+}
 
+void eliminacao(int n, double **matriz, double *b, double *x, int *ce){
+    *ce = 0;
+    //SUBSTITUICAO REGRESSIVA
+    x[n-1]= b[n-1]/matriz[n-1][n-1]; 
+    double soma;
+    for(int i=n-2; i>=0; i--){ 
+        soma = b[i];
+        for(int j=i+1; j<n; j++){
+            soma = soma - matriz[i][j]*x[j];
+        }
+        x[i]= soma/matriz[i][i];
+    }
 
-void eliminacao(int n, double **matriz, double *b){
-    int k;
-	for (int i = 0; i < n; ++i) { //MOSTRAR MATRIZ
-		for (int j = 0; j < n; ++j) {
-			printf("%.2lf ",matriz[i][j]);
-                        fflush(stdout);
-		}
-		printf("  %lf\n", *b);
-                fflush(stdout);
-	}
-	printf("ok\n");
-	fflush(stdout);
-        
-        
-	for (int i = 0; i < n; ++i) { //METODO DE GAUSS
-		pivotear(matriz, i,n);          
-		printf("%d\n",i);
-		fflush(stdout);
-		for (int j = i+1; j<=i+2 && j<n; j++) { //colunas
-                    double m = (matriz[j][i]/matriz[i][i]);
-			for (int k = i; k<n; k++) { //linhas
-				matriz[j][k] -= (matriz[i][k])*m;
-				//Akj=Akj-Aki*Aij/Aii
-				//operacao+2
-			}  
-		}
-	}
-        
-	printf("ok\n");
-	fflush(stdout);
-	for (int i = n-1; i >=0; --i) { //SOLUCIONAR PARA B
-		b[i]=matriz[i][i];
-		for (int j = i+1; j < i+5 && j<n; ++j) {
-			if (matriz[j][i]!=0) {
-				b[i]-=matriz[j][i]*b[j];
-				//operacao+1
-			}
-		}
-	}
-	printf("ok\n");
-	fflush(stdout);
-        
-	for (int i = 0; i < n; ++i) { //MOSTRAR MATRIZ
-		for (int j = 0; j < n; ++j) {
-			printf("%.2lf ",matriz[i][j]);
-		}
-		printf("\n");
-	}
-	printf("ok\n");
-	fflush(stdout);
-        
-        
-	for (int i = 0; i < n; ++i) { //MOSTRAR b
-		printf("%.2lf\n",b[i]);
-	}
-        
+    mostrarMatriz(n, matriz, b);
+    
+    //MOSTRAR X
+    for (int i = 0; i < n; ++i) { 
+            printf("%.2lf\n",x[i]);
+    } 
+}
+
+void gaussSeidel(int n, double **matriz, double *b, double *x, int *cs){
+    cs = 0;
+    
+    
 }

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "organizacao.c"
-#include "gauss.c"
+#include "organizacao.h"
+#include "gauss.h"
 
 int operacoes = 0; //numero de operacoes realizadas
 
@@ -10,21 +10,27 @@ int operacoes = 0; //numero de operacoes realizadas
 
 
 int main(int argc, char const *argv[]){
-    int n;
-    double dA, dB, dC, dD, Dp, **matriz, *b;
-
+    int n, ce, cs;
+    double dA, dB, dC, dD, Dp, **matriz, *b, *x;
+    
 
     pegarValores(&n, &dA, &dB, &Dp, &dC, &dD);
-    prepararSistemaLinear(n, dA, dB, Dp, dC, dD, &matriz, &b);
-
+    prepararSistemaLinear(n, dA, dB, Dp, dC, dD, &matriz, &b, &x);
+    
 
     printf("\n\nn= %d. \ndA= %lf. \ndB= %lf. \ndC= %lf. \ndD= %lf. \nDp= %lf.\n", n, dA, dB, dC, dD, Dp);
     fflush(stdout);
-
-    eliminacao(n, matriz, b);
-
-    liberarTudo(n, &matriz, &b);
-
-
+    
+    //TRIANGULARIZACAO
+    triangularizacao(n, matriz, b);
+    
+    
+    eliminacao(n, matriz, b, x, &ce);
+    
+    //FAZER MAIS DE UMA VEZ...
+    gaussSeidel(n, matriz, b, x, &cs);
+    
+    liberarTudo(n, &matriz, &b, &x);
+    
     return 0;
 }
