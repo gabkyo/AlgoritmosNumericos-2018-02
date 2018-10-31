@@ -20,43 +20,36 @@ void pivotear(double **matriz, int j,int n){
     }
 }
 
-void triangularizacao(int n, double **matriz, double *b, int *ce, int *cs){
-    *ce = *cs = 0;
+void triangularizacao(int n, double **matriz, double *b, int *cG, int *cS){
+    *cG = *cS = 0;
     for (int i = 0; i < n; ++i) { 
         pivotear(matriz, i,n);          
         for (int j = i+1; j<=i+2 && j<n; j++) { //colunas
             double m = (matriz[j][i]/matriz[i][i]);
             for (int k = i; k<n; k++) { //linhas
                 matriz[j][k] -= (matriz[i][k])*m; //OPERACAO EM A
-                *ce = *cs += 2;
+                *cG = *cS += 2;
             }
             b[j] -= b[i]*m; //OPERACAO EM B
-            *ce = *cs += 3;
+            *cG = *cS += 3;
         }
     }
 }
 
-void eliminacao(int n, double **matriz, double *b, double *x, int *ce){
+void gauss(int n, double **matriz, double *b, double *x, int *cG){
     //SUBSTITUICAO REGRESSIVA
     x[n-1]= b[n-1]/matriz[n-1][n-1];
-    *ce += 1;
+    *cG += 1;
     double soma;
     for(int i=n-2; i>=0; i--){ 
         soma = b[i];
         for(int j=i+1; j<n; j++){
             soma += -matriz[i][j]*x[j];
-            *ce += 2; 
+            *cG += 2; 
         }
         x[i]= soma/matriz[i][i];
-        *ce += 1;
+        *cG += 1;
     }
-
-    mostrarMatriz(n, matriz, b);
-    
-    //MOSTRAR X
-    for (int i = 0; i < n; ++i) { 
-            printf("%.2lf\n",x[i]);
-    } 
 }
 
 

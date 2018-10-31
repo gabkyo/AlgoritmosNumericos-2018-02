@@ -5,7 +5,7 @@
 
 #define tol 0.00000000001
 
-bool terminar(double xi,double x0){
+bool terminar(double xi, double x0){
     double temp=fabs(xi-x0)/fabs(xi);
     if(temp<=tol){
         return true;
@@ -14,17 +14,16 @@ bool terminar(double xi,double x0){
 }
 
 
-void seidel(double **matriz,double *b,int n, int *cs){
-    double *x=(double*)malloc(sizeof(double)*n);
+void seidel(double **matriz, double *b, int n, double *xSeidel, int *cS){
     double *xA=(double*)malloc(sizeof(double)*n);
     double soma;
     int contador;
 
     //VALOR INICIAL
     for (int i= 0; i < n; i++) {
-        x[i] = b[i]/matriz[i][i];
+        xSeidel[i] = b[i]/matriz[i][i];
         xA[i] = 1;
-        *cs += 1;
+        *cS += 1;
     }
     
     //ITERACOES
@@ -34,33 +33,27 @@ void seidel(double **matriz,double *b,int n, int *cs){
             for (int j = 0; j < n; j++) {
                 if(i!=j){
                     soma += matriz[i][j]*xA[j];
-                    *cs+=2;
+                    *cS+=2;
                 }
             }
-            x[i] = (b[i] - soma) / matriz[i][i];
-            *cs += 2;
+            xSeidel[i] = (b[i] - soma) / matriz[i][i];
+            *cS += 2;
         }
        
 
         //CONFERE SE ACABOU E ATUALIZA X-ANTIGO
         contador = 1;
         for(int i = 0; i < n ; i++) {
-            if(!terminar(x[i], xA[i])){
+            if(!terminar(xSeidel[i], xA[i])){
                 break;
             }else{
                 contador++;
             }     
             if(contador == n){//TRUE = ACABOU
-                printf("\n\n");
-                for (int j = 0; j < n; j++) {
-                        printf("%.2lf\n",x[j]);
-                        fflush(stdout);
-                }
-                free(x);
                 free(xA);
                 return;
             } 
-            xA[i]=x[i];
+            xA[i] = xSeidel[i];
         } 
     }
 }

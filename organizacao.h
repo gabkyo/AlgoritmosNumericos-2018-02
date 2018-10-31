@@ -6,9 +6,10 @@ extern "C" {
 #endif
 
 void pegarValores(int *n, double *dA, double *dB, double *Dp, double *dC, double *dD);
-void prepararSistemaLinear(int n, double dA, double dB, double Dp, double dC, double dD, double ***matriz, double **b, double **x);
-void liberarTudo(int n, double ***matriz, double **b, double **x);
+void prepararSistemaLinear(int n, double dA, double dB, double Dp, double dC, double dD, double ***matriz, double **b, double **xGauss, double **xSeidel);
+void liberarTudo(int n, double ***matriz, double **b, double **xGauss, double **xSeidel);
 void mostrarMatriz(int n, double **matriz, double *b);
+void mostrarSaida(int n, double *xGauss, int cG, double *xSeidel, int cS);
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "organizacao.h"
+#include <math.h>
 
 void pegarValores(int *n, double *dA, double *dB, double *Dp, double *dC, double *dD){
 
@@ -11,8 +12,7 @@ void pegarValores(int *n, double *dA, double *dB, double *Dp, double *dC, double
         if (*n < 3){
             printf("Valor Invalido! n= %d\n", *n);
             fflush(stdout);
-        }
-        else{
+        }else{
             break;
         }
     }
@@ -24,8 +24,7 @@ void pegarValores(int *n, double *dA, double *dB, double *Dp, double *dC, double
         if (*dA == 0.0){
             printf("Valor Invalido! dA= 0.\n");
             fflush(stdout);
-        }
-        else{
+        }else{
             break;
         }
     }
@@ -37,12 +36,23 @@ void pegarValores(int *n, double *dA, double *dB, double *Dp, double *dC, double
         if (*dB == 0.0){
             printf("Valor Invalido! dB= 0.\n");
             fflush(stdout);
-        }
-        else{
+        }else{
             break;
         }
     }
-
+    
+    while (1){
+        printf("Insira Dp(!=0): \n");
+        fflush(stdout);
+        scanf("%lf", Dp);
+        if (*Dp == 0.0){
+            printf("Valor Invalido! Dp= 0.\n");
+            fflush(stdout);
+        }else{
+            break;
+        }
+    }
+    
     while (1){
         printf("Insira dC(!=0): \n");
         fflush(stdout);
@@ -50,8 +60,7 @@ void pegarValores(int *n, double *dA, double *dB, double *Dp, double *dC, double
         if (*dC == 0.0){
             printf("Valor Invalido! dC= 0.\n");
             fflush(stdout);
-        }
-        else{
+        }else{
             break;
         }
     }
@@ -63,28 +72,14 @@ void pegarValores(int *n, double *dA, double *dB, double *Dp, double *dC, double
         if (*dD == 0.0){
             printf("Valor Invalido! dD= 0.\n");
             fflush(stdout);
-        }
-        else{
-            break;
-        }
-    }
-
-    while (1){
-        printf("Insira Dp(!=0): \n");
-        fflush(stdout);
-        scanf("%lf", Dp);
-        if (*Dp == 0.0){
-            printf("Valor Invalido! Dp= 0.\n");
-            fflush(stdout);
-        }
-        else{
+        }else{
             break;
         }
     }
 }
 
 
-void prepararSistemaLinear(int n, double dA, double dB, double Dp, double dC, double dD, double ***matriz, double **b, double **x){
+void prepararSistemaLinear(int n, double dA, double dB, double Dp, double dC, double dD, double ***matriz, double **b, double **xGauss, double **xSeidel){
     
     //ALOCAR E PREENCHER MATRIZ
     double **matrizAux;
@@ -123,24 +118,29 @@ void prepararSistemaLinear(int n, double dA, double dB, double Dp, double dC, do
     *b = bAux; 
     
     
-    //ALOCAR X
-    *x = (double*)malloc(sizeof(double)*n);
+    //ALOCAR X's
+    *xGauss = (double*)malloc(sizeof(double)*n);
+    *xSeidel = (double*)malloc(sizeof(double)*n);
     
 }
 
-void liberarTudo(int n, double ***matriz, double **b, double **x){
+void liberarTudo(int n, double ***matriz, double **b, double **xGauss, double **xSeidel){
     double **matrizAux;
     matrizAux = *matriz;
-    	for (int i = 0; i < n; ++i) { //MOSTRAR MATRIZ
-            free(matrizAux[i]);
-	}
+    
+    for (int i = 0; i < n; ++i) { //MOSTRAR MATRIZ
+        free(matrizAux[i]);
+    }
+    
     free(*b);
-    free(*x);
+    free(*xGauss);
+    free(*xSeidel);
     free(matrizAux);
     
     *matriz = NULL;
     *b = NULL;
-    *x = NULL;
+    *xGauss = NULL;
+    *xSeidel = NULL;
 }
 
 void mostrarMatriz(int n, double **matriz, double *b){
@@ -155,7 +155,54 @@ void mostrarMatriz(int n, double **matriz, double *b){
     }
     printf("\n");
 }
-    
+              
             
-            
+void mostrarSaida(int n, double *xGauss, int cG, double *xSeidel, int cS){
+    double somaG, maiorG, somaS, maiorS;
+    double eMaxG, eMedG, *eG;
+    double eMaxS, eMedS, *eS;
+    eG = (double*) malloc(sizeof(double)*n);
+    eS = (double*) malloc(sizeof(double)*n);
     
+    //CALCULO DE ERROS
+    somaG = 0;
+    somaS = 0;
+    for(int i = 0; i < n; i++){
+        eG[i] = fabs(xGauss[i]-1.0);
+        somaG+=eG[i];
+        
+        eS[i] = fabs(xSeidel[i]-1.0);
+        somaG+=eS[i];
+        
+        if(i == 0){
+            maiorG = eG[i];
+            maiorS = eS[i];
+        } 
+        if(eG[i] > maiorG){
+            maiorG = eG[i];
+        }
+        if(eS[i] > maiorS){
+            maiorS = eS[i];
+        }
+    }
+    eMaxG = maiorG;
+    eMedG = somaG/n;
+    
+    eMaxS = maiorS;
+    eMedS = somaS/n;
+    
+    
+    
+    printf("\n\n     ----GAUSS---\n");
+    printf("Numero de Operacoes: %d\n", cG);
+    printf("eMax= %lf\neMed= %lf\n", eMaxG, eMedG);
+    
+    printf("\n\n     ---SEIDEL---\n");
+    printf("Numero de Operacoes: %d\n", cS);
+    printf("eMax= %lf\neMed= %lf\n", eMaxS, eMedS);
+    
+    
+   free(eG);
+   free(eS);
+   return;
+}

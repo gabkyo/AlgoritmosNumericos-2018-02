@@ -4,31 +4,29 @@
 #include "gauss.h"
 #include "seidel.h"
 
-int operacoes = 0; //numero de operacoes realizadas
-
 int main(int argc, char const *argv[]){
-    int n, ce, cs;
-    double dA, dB, dC, dD, Dp, **matriz, *b, *x;
+    int n, cG, cS;
+    double dA, dB, dC, dD, Dp, **matriz, *b, *xGauss, *xSeidel;
     
 
     pegarValores(&n, &dA, &dB, &Dp, &dC, &dD);
-    prepararSistemaLinear(n, dA, dB, Dp, dC, dD, &matriz, &b, &x);
+    prepararSistemaLinear(n, dA, dB, Dp, dC, dD, &matriz, &b, &xGauss, &xSeidel);
     
 
     printf("\n\nn= %d. \ndA= %lf. \ndB= %lf. \ndC= %lf. \ndD= %lf. \nDp= %lf.\n", n, dA, dB, dC, dD, Dp);
     fflush(stdout);
     
     //TRIANGULARIZACAO
-    triangularizacao(n, matriz, b, &ce, &cs);
+    triangularizacao(n, matriz, b, &cG, &cS);
     
     //METODOS
-    eliminacao(n, matriz, b, x, &ce);
-    seidel(matriz, b, n, &cs);
+    gauss(n, matriz, b, xGauss, &cG);
+    seidel(matriz, b, n, xSeidel, &cS);
     
-    //MOSTRANDO ITERACOES
-    printf("\n\nce: %d.\ncs: %d.", ce, cs);
-    fflush(stdout);
+    //SAIDA
+    mostrarSaida(n, xGauss, cG, xSeidel, cS);
     
-    liberarTudo(n, &matriz, &b, &x);
+    //LIBERAR MEMORIA
+    liberarTudo(n, &matriz, &b, &xGauss, &xSeidel);
     return 0;
 }
