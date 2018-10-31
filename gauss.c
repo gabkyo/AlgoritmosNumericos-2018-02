@@ -24,31 +24,31 @@ void triangularizacao(int n, double **matriz, double *b, int *ce, int *cs){
     *ce = *cs = 0;
     for (int i = 0; i < n; ++i) { 
         pivotear(matriz, i,n);          
-        printf("%d\n",i);
-        fflush(stdout);
         for (int j = i+1; j<=i+2 && j<n; j++) { //colunas
             double m = (matriz[j][i]/matriz[i][i]);
             for (int k = i; k<n; k++) { //linhas
                 matriz[j][k] -= (matriz[i][k])*m; //OPERACAO EM A
-                *ce = *cs += 2; //CONTAGEM DE OPERACOES EM A
+                *ce = *cs += 2;
             }
             b[j] -= b[i]*m; //OPERACAO EM B
-            *ce = *cs += 2; // CONTAGENS OPERACOES EM B
+            *ce = *cs += 3;
         }
     }
 }
 
 void eliminacao(int n, double **matriz, double *b, double *x, int *ce){
     //SUBSTITUICAO REGRESSIVA
-    x[n-1]= b[n-1]/matriz[n-1][n-1]; 
+    x[n-1]= b[n-1]/matriz[n-1][n-1];
+    *ce += 1;
     double soma;
     for(int i=n-2; i>=0; i--){ 
         soma = b[i];
         for(int j=i+1; j<n; j++){
-            soma = soma - matriz[i][j]*x[j];
+            soma += -matriz[i][j]*x[j];
             *ce += 2; 
         }
         x[i]= soma/matriz[i][i];
+        *ce += 1;
     }
 
     mostrarMatriz(n, matriz, b);

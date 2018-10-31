@@ -21,16 +21,14 @@ int main(int argc, char const *argv[]){
     //TRIANGULARIZACAO
     triangularizacao(n, matriz, b, &ce, &cs);
     
-    
+    //METODOS
     eliminacao(n, matriz, b, x, &ce);
+    seidel(matriz, b, n, &cs);
     
-    //FAZER MAIS DE UMA VEZ...
-    inicio(matriz,b,n);
-    
-    liberarTudo(n, &matriz, &b, &x);
-    
-    printf("\n\n%d\n", ce);
+    //MOSTRANDO ITERACOES
+    printf("\n\nce: %d.\ncs: %d.", ce, cs);
     fflush(stdout);
     
+    liberarTudo(n, &matriz, &b, &x);
     return 0;
 }
