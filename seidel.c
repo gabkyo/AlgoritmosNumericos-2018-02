@@ -31,18 +31,13 @@ void seidel(double **matriz, double *b, int n, double *xSeidel, int *cS){
         for (int i = 0; i < n; i++) {
             soma = 0;
             for (int j = 0; j < n; j++) {
-                if(i!=j && matriz[i][j]!=0.0 && xSeidel[j]!=0.0){
-                    soma += matriz[i][j]*xSeidel[j];
+                if(i!=j){
+                    soma += matriz[i][j]*xA[j];
                     *cS+=2;
                 }
             }
-            if(soma!=0.0){
-                xSeidel[i] = (b[i] - soma) / matriz[i][i];
-                *cS += 2;
-            }else{
-                xSeidel[i] = b[i] / matriz[i][i];
-                *cS += 1;
-            }
+            xSeidel[i] = (b[i] - soma) / matriz[i][i];
+            *cS += 2;
         }
        
 
@@ -53,7 +48,6 @@ void seidel(double **matriz, double *b, int n, double *xSeidel, int *cS){
                 break;
             }else{
                 contador++;
-                printf("\n\n CONTADORSS: %d\n", contador);
             }     
             if(contador == n){//TRUE = ACABOU
                 free(xA);

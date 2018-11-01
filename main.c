@@ -12,8 +12,8 @@ int main(int argc, char const *argv[]){
     pegarValores(&n, &dA, &dB, &Dp, &dC, &dD);
     prepararSistemaLinear(n, dA, dB, Dp, dC, dD, &matriz, &b, &xGauss, &xSeidel);
     
-    
-    printf("\n\nn= %d. \ndA= %lf. \ndB= %lf. \nDp= %lf. \ndC= %lf. \ndD= %lf.\n", n, dA, dB, Dp, dD, dC);
+
+    printf("\n\nn= %d. \ndA= %lf. \ndB= %lf. \ndC= %lf. \ndD= %lf. \nDp= %lf.\n", n, dA, dB, dC, dD, Dp);
     fflush(stdout);
     
     //TRIANGULARIZACAO
