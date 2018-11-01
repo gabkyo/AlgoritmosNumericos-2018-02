@@ -16,11 +16,13 @@ int main(int argc, char const *argv[]){
     printf("\n\nn= %d. \ndA= %lf. \ndB= %lf. \ndC= %lf. \ndD= %lf. \nDp= %lf.\n", n, dA, dB, dC, dD, Dp);
     fflush(stdout);
     
+    
     //TRIANGULARIZACAO
     triangularizacao(n, matriz, b, &cG, &cS);
     
     //METODOS
     gauss(n, matriz, b, xGauss, &cG);
+    
     seidel(matriz, b, n, xSeidel, &cS);
     
     //SAIDA

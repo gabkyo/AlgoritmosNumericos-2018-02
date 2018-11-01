@@ -21,9 +21,13 @@ void seidel(double **matriz, double *b, int n, double *xSeidel, int *cS){
 
     //VALOR INICIAL
     for (int i= 0; i < n; i++) {
-        xSeidel[i] = b[i]/matriz[i][i];
-        xA[i] = 1;
-        *cS += 1;
+        if(b[i]!=0){
+            xSeidel[i] = b[i]/matriz[i][i];
+            xA[i] = 1;
+            *cS += 1;
+        }else{
+            xSeidel[i]=0;
+        }
     }
     
     //ITERACOES
@@ -31,13 +35,19 @@ void seidel(double **matriz, double *b, int n, double *xSeidel, int *cS){
         for (int i = 0; i < n; i++) {
             soma = 0;
             for (int j = 0; j < n; j++) {
-                if(i!=j){
-                    soma += matriz[i][j]*xA[j];
+                if(i!=j && matriz[i][j]!=0 && xSeidel[j]!=0){
+                    soma += matriz[i][j]*xSeidel[j];
                     *cS+=2;
                 }
             }
-            xSeidel[i] = (b[i] - soma) / matriz[i][i];
-            *cS += 2;
+
+            if(soma==0 && b[i]!=0){
+                xSeidel[i] = b[i] / matriz[i][i];
+                *cS += 1;
+            } else {
+                xSeidel[i] = (b[i]-soma) / matriz[i][i];
+                *cS += 2;
+            }           
         }
        
 
