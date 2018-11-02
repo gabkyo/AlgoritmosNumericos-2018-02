@@ -174,7 +174,7 @@ void mostrarSaida(int n, double *xGauss, int cG, double *xSeidel, int cS){
         somaEG+=eG[i];
         
         eS[i] = fabs(xSeidel[i]-1.0);
-        somaEG+=eS[i];
+        somaES+=eS[i];
         
         if(i == 0){
             maiorG = eG[i];
@@ -193,22 +193,22 @@ void mostrarSaida(int n, double *xGauss, int cG, double *xSeidel, int cS){
     eMaxS = maiorS;
     eMedS = somaES/n;
     
-        /* MOSTRAR X
+    //MOSTRAR X
     for(int i=0; i<n; i++){ 
         printf("\nxGauss%d: %lf", i, xGauss[i]);
-        printf("\nxSeidel%d: %lf", i, xSeidel[i]);
+       // printf("\nxSeidel%d: %lf", i, xSeidel[i]);
     }
-    */
+    
      
     printf("\n\n     ----GAUSS---\n");
     printf("N:%d.\n", n);         //TIRAR NA NA APRESENTACAO
-    printf("SomaXG:%lf\n", somaXG); //TIRAR NA NA APRESENTACAO
+    printf("SomaXG: %lf\n", somaXG); //TIRAR NA NA APRESENTACAO
     printf("Numero de Operacoes: %d\n", cG);
     printf("eMax= %lf\neMed= %lf\n", eMaxG, eMedG);
     
     printf("\n\n     ---SEIDEL---\n");
     printf("N:%d.\n", n);         //TIRAR NA NA APRESENTACAO
-    printf("SomaXS:%lf\n", somaXS); //TIRAR NA NA APRESENTACAO
+    printf("SomaXS: %lf\n", somaXS); //TIRAR NA NA APRESENTACAO
     printf("Numero de Operacoes: %d\n", cS);
     printf("eMax= %lf\neMed= %lf\n", eMaxS, eMedS);
     

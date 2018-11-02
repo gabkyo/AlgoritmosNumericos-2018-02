@@ -10,7 +10,7 @@ void pivotear(double **matriz, double *b, int j, int n){
     
     max=j;
     for(int i=j; i<n; i++){
-        if(matriz[i][j] > matriz[j][max]) {
+        if(matriz[i][j] > matriz[max][j]) {
             max=i;
         }       
     }
@@ -27,7 +27,7 @@ void triangularizacao(int n, double **matriz, double *b, int *cG, int *cS){
     double m =0 ;
   
     for (int i = 0; i < n; ++i) { 
-        pivotear(matriz, b, i,n); 
+        pivotear(matriz, b, i, n); 
         //mostrarMatriz(n, matriz, b);
         for (int j = i+1; j<=i+2 && j<n; j++) { //colunas
             if(matriz[j][i]!=0){
@@ -38,7 +38,7 @@ void triangularizacao(int n, double **matriz, double *b, int *cG, int *cS){
             }
             
             for (int k = i; k<n; k++) { //linhas
-                if((matriz[i][k])!=0 && m!=0){
+                if(matriz[i][k]!=0 && m!=0){
                     matriz[j][k] -= (matriz[i][k])*m; //OPERACAO EM A
                     *cG = *cS += 2;
                 }
