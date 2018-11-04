@@ -193,11 +193,14 @@ void mostrarSaida(int n, double *xGauss, int cG, double *xSeidel, int cS){
     eMaxS = maiorS;
     eMedS = somaES/n;
     
+    
+    /*
     //MOSTRAR X
     for(int i=0; i<n; i++){ 
         printf("\nxGauss%d: %lf", i, xGauss[i]);
-       // printf("\nxSeidel%d: %lf", i, xSeidel[i]);
+        printf("\nxSeidel%d: %lf", i, xSeidel[i]);
     }
+    */
     
      
     printf("\n\n     ----GAUSS---\n");

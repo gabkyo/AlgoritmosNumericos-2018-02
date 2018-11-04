@@ -19,15 +19,15 @@ void seidel(double **matriz, double *b, int n, double *xSeidel, int *cS){
     double soma;
     int contador;
 
-    //VALOR INICIAL
+    //VALORES INICIAIS
     for (int i= 0; i < n; i++) {
         if(b[i]!=0){
             xSeidel[i] = b[i]/matriz[i][i];
-            xA[i] = 1;
             *cS += 1;
         }else{
             xSeidel[i]=0;
         }
+        xA[i] = 1;
     }
     
     //ITERACOES
@@ -51,19 +51,24 @@ void seidel(double **matriz, double *b, int n, double *xSeidel, int *cS){
         }
        
 
-        //CONFERE SE ACABOU E ATUALIZA X-ANTIGO
+        //CONFERE SE ACABOU ATRAVES DA TOLERANCIA
         contador = 1;
         for(int i = 0; i < n ; i++) {
-            if(!terminar(xSeidel[i], xA[i])){
-                break;
-            }else{
+            if(terminar(xSeidel[i], xA[i])){
                 contador++;
+            }else{
+                break;
             }     
             if(contador == n){//TRUE = ACABOU
                 free(xA);
                 return;
             } 
-            xA[i] = xSeidel[i];
         } 
+        
+        //ATUALIZA X-ANTIGO
+        for(int i = 0; i < n ; i++){
+            xA[i] = xSeidel[i];
+        }
+        
     }
 }
