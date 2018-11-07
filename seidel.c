@@ -3,7 +3,7 @@
 #include "seidel.h"
 #include <math.h>
 
-#define tol 0.00000000001
+#define tol 0.0000000001
 
 bool terminar(double xi, double x0){
     double temp=fabs(xi-x0)/fabs(xi);
@@ -21,12 +21,8 @@ void seidel(double **matriz, double *b, int n, double *xSeidel, int *cS){
 
     //VALORES INICIAIS
     for (int i= 0; i < n; i++) {
-        if(b[i]!=0){
-            xSeidel[i] = b[i]/matriz[i][i];
-            *cS += 1;
-        }else{
-            xSeidel[i]=0;
-        }
+        xSeidel[i] = b[i]/matriz[i][i];
+        *cS += 1;
         xA[i] = 1;
     }
     
@@ -34,20 +30,14 @@ void seidel(double **matriz, double *b, int n, double *xSeidel, int *cS){
     while(true) {
         for (int i = 0; i < n; i++) {
             soma = 0;
-            for (int j = 0; j < n; j++) {
-                if(i!=j && matriz[i][j]!=0 && xSeidel[j]!=0){
+            for (int j = i-2; j <= i+2; j++) {
+                if(i!=j && j>=0){
                     soma += matriz[i][j]*xSeidel[j];
                     *cS+=2;
                 }
             }
-
-            if(soma==0 && b[i]!=0){
-                xSeidel[i] = b[i] / matriz[i][i];
-                *cS += 1;
-            } else {
-                xSeidel[i] = (b[i]-soma) / matriz[i][i];
-                *cS += 2;
-            }           
+            xSeidel[i] = (b[i]-soma) / matriz[i][i];
+            *cS += 2;             
         }
        
 

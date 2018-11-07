@@ -13,18 +13,15 @@ int main(int argc, char const *argv[]){
     prepararSistemaLinear(n, dA, dB, Dp, dC, dD, &matriz, &b, &xGauss, &xSeidel);
     
 
-    printf("\n\nn= %d. \ndA= %lf. \ndB= %lf. \ndC= %lf. \ndD= %lf. \nDp= %lf.\n", n, dA, dB, dC, dD, Dp);
+    printf("\n\nn= %d. \ndA= %lf. \ndB= %lf. \nDp= %lf. \ndC= %lf. \ndD= %lf.\n", n, dA, dB, Dp, dC, dD);
     fflush(stdout);
     
-    
-    //TRIANGULARIZACAO
-    triangularizacao(n, matriz, b, &cG, &cS);
-    
-    //METODOS
-    gauss(n, matriz, b, xGauss, &cG);
-    
+    //ITERATIVO DE DEIDEL
     seidel(matriz, b, n, xSeidel, &cS);
     
+    //ELIMINACAO DE GAUUS
+    gauss(n, matriz, b, xGauss, &cG);
+
     //SAIDA
     mostrarSaida(n, xGauss, cG, xSeidel, cS);
     

@@ -9,7 +9,7 @@ void pivotear(double **matriz, double *b, int j, int n){
     double aux;
     
     max=j;
-    for(int i=j; i<n; i++){
+    for(int i=j; i<=j+2 && i<n; i++){
         if(matriz[i][j] > matriz[max][j]) {
             max=i;
         }       
@@ -22,37 +22,33 @@ void pivotear(double **matriz, double *b, int j, int n){
     }
 }
 
-void triangularizacao(int n, double **matriz, double *b, int *cG, int *cS){
-    *cG = *cS = 0;
+void triangularizacao(int n, double **matriz, double *b, int *cG){
+    *cG = 0;
     double m =0 ;
   
     for (int i = 0; i < n; ++i) { 
         pivotear(matriz, b, i, n); 
         //mostrarMatriz(n, matriz, b);
         for (int j = i+1; j<=i+2 && j<n; j++) { //colunas
-            if(matriz[j][i]!=0){
-                m = (matriz[j][i]/matriz[i][i]);
-                *cG = *cS += 1;
-            } else {
-                m = 0;
+            m = matriz[j][i]/matriz[i][i];
+            *cG += 1;
+            
+            for (int k = i; k<=i+4 && k<n; k++) { //linhas
+                matriz[j][k] -= (matriz[i][k])*m; //OPERACAO EM A
+                *cG += 2;
             }
             
-            for (int k = i; k<n; k++) { //linhas
-                if(matriz[i][k]!=0 && m!=0){
-                    matriz[j][k] -= (matriz[i][k])*m; //OPERACAO EM A
-                    *cG = *cS += 2;
-                }
-            }
-            
-            if(b[i]!=0 && m!=0){
-                b[j] -= b[i]*m; //OPERACAO EM B
-                *cG = *cS += 2;
-            }
+            b[j] -= b[i]*m; //OPERACAO EM B
+            *cG += 2;
         }
     }
 }
 
 void gauss(int n, double **matriz, double *b, double *xGauss, int *cG){
+    //TRIANGULARIZACAO
+    triangularizacao(n, matriz, b, cG);
+    
+    
     //SUBSTITUICAO REGRESSIVA
     if((b[n-1])!=0){
         xGauss[n-1]= b[n-1]/matriz[n-1][n-1];
