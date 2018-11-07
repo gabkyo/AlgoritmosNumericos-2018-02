@@ -50,27 +50,18 @@ void gauss(int n, double **matriz, double *b, double *xGauss, int *cG){
     
     
     //SUBSTITUICAO REGRESSIVA
-    if((b[n-1])!=0){
-        xGauss[n-1]= b[n-1]/matriz[n-1][n-1];
-        *cG += 1;
-    }else{
-        xGauss[n-1]=0;
-    }
+    xGauss[n-1]= b[n-1]/matriz[n-1][n-1]; //CALCULO XN
+    *cG += 1;
 
     double soma;
     for(int i=n-2; i>=0; i--){ 
         soma = b[i];
-        for(int j=i+1; j<n; j++){
-            if(matriz[i][j]!=0 && xGauss[j]!=0){           
-                soma -= matriz[i][j]*xGauss[j];
-                *cG += 2; 
-            }
+        for(int j=i+1; j<=i+4 && j<n; j++){         
+            soma -= matriz[i][j]*xGauss[j];
+            *cG += 2; 
         }
-        if(soma!=0){
-            xGauss[i] = soma/matriz[i][i];
+        xGauss[i] = soma/matriz[i][i];
             *cG += 1;
-        }else{ 
-            xGauss[i] = 0;
-        }
+
     }
 }
